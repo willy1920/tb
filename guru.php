@@ -10,6 +10,7 @@
   <head>
     <meta charset="utf-8">
     <title>Guru Rapot Tunas Bangsa</title>
+    <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/guru.js"></script>
   </head>
   <body>

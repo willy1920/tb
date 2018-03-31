@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2018 at 04:30 PM
+-- Generation Time: Mar 31, 2018 at 04:37 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -62,6 +62,22 @@ INSERT INTO `kelas` (`id_kelas`, `nama_kelas`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `id_report` mediumint(8) UNSIGNED NOT NULL,
+  `nik` int(10) UNSIGNED NOT NULL,
+  `id_kelas` tinyint(3) UNSIGNED NOT NULL,
+  `mid1` char(25) DEFAULT NULL,
+  `term1` char(25) DEFAULT NULL,
+  `mid2` char(25) DEFAULT NULL,
+  `term2` char(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `siswa`
 --
 
@@ -116,6 +132,12 @@ ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`);
 
 --
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id_report`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -137,6 +159,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `kelas`
   MODIFY `id_kelas` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `id_report` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
