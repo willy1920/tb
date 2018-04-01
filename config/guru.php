@@ -25,7 +25,8 @@
         $this->getSiswa();
       }
       else {
-        echo "cacat";
+        header("Location: index.php");
+        exit();
       }
     }
 
