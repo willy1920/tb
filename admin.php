@@ -17,7 +17,7 @@
   <body>
     <nav>
       <div onclick="dashboardKelas()">Kelas</div>
-      <div>Murid</div>
+      <div onclick="dashboardMurid()">Murid</div>
     </nav>
     <main id="respon">
 

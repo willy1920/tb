@@ -111,3 +111,124 @@ function hapusKelas(id) {
   }
 
 }
+
+function dashboardMurid(){
+  
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      var display = document.getElementById('respon');
+      display.innerHTML = respon;
+    }
+  }
+
+  ajaxRequest.open("GET", "control/dashboardMurid.php", true);
+  ajaxRequest.send();
+}
+
+function tambahMuridDashboard() {
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      var display = document.getElementById('respon');
+      display.innerHTML = respon;
+    }
+  }
+
+  ajaxRequest.open("GET", "control/tambahMuridDashboard.php", true);
+  ajaxRequest.send();
+}
+
+function tambahMurid() {
+  var nik = document.getElementById('nik').value;
+  var nama = document.getElementById('nama').value;
+  var email = document.getElementById('email').value;
+  var kelas = document.getElementById('kelas').value;
+
+  var input = "nik=" + nik + "&nama=" + nama + "&email=" + email + "&kelas=" + kelas;
+
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      if (respon == 1) {
+        dashboardKelas();
+      }
+      else {
+        alert(respon);
+      }
+    }
+  }
+
+  ajaxRequest.open("POST", "control/tambahMurid.php", true);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajaxRequest.send(input);
+}
+
+function ubahMuridDashboard(id, nama, user, kelas) {
+  var input = "id=" + id + "&nama=" + nama + "&user=" + user + "&kelas=" + kelas;
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      var display = document.getElementById('respon');
+      display.innerHTML = respon;
+    }
+  }
+
+  ajaxRequest.open("POST", "control/ubahMuridDashboard.php", true);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajaxRequest.send(input);
+}
+
+function ubahMurid() {
+  var id = document.getElementById('nik').textContent;
+  var nama = document.getElementById('nama').value;
+  var user = document.getElementById('email').value;
+  var kelas = document.getElementById('kelas').value;
+  var input = "id=" + id + "&nama=" + nama + "&user=" + user + "&kelas=" + kelas;
+
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      if (respon == 1) {
+        dashboardMurid();
+      }
+      else {
+        alert(respon);
+      }
+    }
+  }
+
+  ajaxRequest.open("POST", "control/ubahMurid.php", true);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajaxRequest.send(input);
+}
+
+function hapusMurid(id) {
+  var hapus = confirm("Are you sure?");
+  if (hapus) {
+    var input = "id=" + id;
+
+    var ajaxRequest = ajax(ajaxRequest);
+    ajaxRequest.onreadystatechange = function(){
+      if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+        var respon = ajaxRequest.responseText;
+        if (respon == 1) {
+          dashboardMurid();
+        }
+        else {
+          alert(respon);
+        }
+      }
+    }
+
+    ajaxRequest.open("POST", "control/hapusMurid.php", true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajaxRequest.send(input);
+  }
+
+}
