@@ -33,16 +33,28 @@
     public function getSiswaReportData($id){
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
       $kelas = $_SESSION['kelas'];
-      $sql = "SELECT mid1, term1, mid2, term2 FROM report WHERE nik=? AND id_kelas=?";
+      $sql = "SELECT id_report, mid1, term1, mid2, term2 FROM report WHERE nik=? AND id_kelas=?";
       if ($stmt = $mysqli->prepare($sql)) {
         $stmt->bind_param("ii", $id, $kelas);
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-          $stmt->bind_result($mid1, $term1, $mid2, $term2);
+          $stmt->bind_result($idReport, $mid1, $term1, $mid2, $term2);
+          ?>
+          <table>
+            <tr>
+              <th>Mid 1</th>
+              <th>Semester 1</th>
+              <th>Mid 2</th>
+              <th>Semester 2</th>
+            </tr>
+          <?php
           while ($stmt->fetch()) {
-            $this->rapotSiswa($id, $mid1, $term1, $mid2, $term2);
+            $this->rapotSiswa($idReport, $mid1, $term1, $mid2, $term2);
           }
+          ?>
+          </table>
+          <?php
         }
         else {
           $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
@@ -68,13 +80,6 @@
 
     private function rapotSiswa($id, $mid1, $term1, $mid2, $term2){
       ?>
-      <table>
-        <tr>
-          <th>Mid 1</th>
-          <th>Semester 1</th>
-          <th>Mid 2</th>
-          <th>Semester 2</th>
-        </tr>
         <tr>
           <td>
             <?php
@@ -117,7 +122,6 @@
             ?>
           </td>
         </tr>
-      </table>
       <?php
     }
 
@@ -126,7 +130,7 @@
       $targetFolder = $targetFolder.".pdf";
 
       $sql = "UPDATE report SET
-              $rapot=?
+              `$rapot`=?
               WHERE id_report=?";
       if ($stmt = $mysqli->prepare($sql)) {
         $stmt->bind_param("si", $targetFolder, $id);
