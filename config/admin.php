@@ -159,13 +159,13 @@
             $sql = "SELECT * FROM kelas";
             $query = $mysqli->query($sql);
             if($query){
+              echo '<select id="kelas">';
               while ($row = $query->fetch_array(MYSQLI_NUM)) {
                 ?>
-                <select id="kelas">
-                  <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                </select>
+                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
                 <?php
               }
+              echo '</select>';
               $mysqli->close();
               unset($mysqli, $sql, $query, $row);
             }
@@ -183,13 +183,13 @@
             $sql = "SELECT email FROM ortu";
             $query = $mysqli->query($sql);
             if($query){
+              echo "<select id='email'>";
               while ($row = $query->fetch_array(MYSQLI_NUM)) {
                 ?>
-                <select id="email">
-                  <option value="<?php echo $row[0]; ?>"><?php echo $row[0]; ?></option>
-                </select>
+                <option value="<?php echo $row[0]; ?>"><?php echo $row[0]; ?></option>
                 <?php
               }
+              echo "</select>";
               $mysqli->close();
               unset($mysqli, $sql, $query, $row);
             }
@@ -338,6 +338,70 @@
       }
       else{
         echo "Failed";
+      }
+    }
+
+    public function dashboardOrtu(){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "SELECT email FROM ortu";
+      if ($query = $mysqli->query($sql)) {
+        echo "<img class='icon' src='../icon/add.png' onclick='tambahOrtuDashboard()'>";
+        echo "<table>";
+        while ($row = $query->fetch_array(MYSQLI_NUM)) {
+          ?>
+          <tr>
+            <td><?php echo $row[0]; ?></td>
+            <td><img class='icon' src='../icon/delete.png' onclick='hapusOrtu("<?php echo $row[0]; ?>")'></td>
+          </tr>
+          <?php
+        }
+        echo "</table>";
+      }
+    }
+
+    public function tambahOrtuDashboard(){
+      ?>
+      <table>
+        <tr>
+          <td>Email</td>
+          <td>:</td>
+          <td><input type="email" id="email"></td>
+        </tr>
+        <tr>
+          <td><button onclick="tambahOrtu()">Submit</button></td>
+        </tr>
+      </table>
+      <?php
+    }
+
+    public function tambahOrtu($email){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $pass = "0";
+      $activated = 0;
+      $sql = "INSERT INTO ortu (email, pass, activated) VALUES(?, ?, ?)";
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("ssi", $email, $pass, $activated);
+        $stmt->execute();
+        if ($stmt->affected_rows == 1) {
+          echo "1";
+        }
+        else{
+          echo "Execute failed";
+        }
+      }
+      else{
+        echo "Prepare failed";
+      }
+    }
+
+    public function hapusOrtu($email){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "DELETE FROM ortu WHERE email='$email'";
+      if ($query = $mysqli->query($sql)) {
+        echo "1";
+      }
+      else{
+        "Delete failed";
       }
     }
   }

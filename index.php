@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +32,7 @@
 			var ajaxRequest = ajax(ajaxRequest);
 			ajaxRequest.onreadystatechange = function(){
 				if (ajaxRequest.status == 200 && ajaxRequest.readyState == 4) {
-		      var response = ajaxRequest.responseText;
+		      		var response = ajaxRequest.responseText;
 					if (response == 0) {
 						window.location = 'admin.php';
 					}

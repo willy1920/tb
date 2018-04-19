@@ -18,6 +18,8 @@
     <nav>
       <div onclick="dashboardKelas()">Kelas</div>
       <div onclick="dashboardMurid()">Murid</div>
+      <div onclick="dashboardOrtu()">Orang Tua</div>
+      <div onclick="logout()">Logout</div>
     </nav>
     <main id="respon">
 

@@ -232,3 +232,92 @@ function hapusMurid(id) {
   }
 
 }
+
+function dashboardOrtu() {
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      var display = document.getElementById('respon');
+      display.innerHTML = respon;
+    }
+  }
+
+  ajaxRequest.open("GET", "control/dashboardOrtu.php", true);
+  ajaxRequest.send();
+}
+
+function tambahOrtuDashboard() {
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      var display = document.getElementById('respon');
+      display.innerHTML = respon;
+    }
+  }
+
+  ajaxRequest.open("GET", "control/tambahOrtuDashboard.php", true);
+  ajaxRequest.send();
+}
+
+function tambahOrtu() {
+  var email = document.getElementById('email').value;
+  var input = "email=" + email;
+
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      if (respon == 1) {
+        dashboardOrtu();
+      }
+      else {
+        alert(respon);
+      }
+    }
+  }
+
+  ajaxRequest.open("POST", "control/tambahOrtu.php", true);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajaxRequest.send(input);
+}
+
+function hapusOrtu(email) {
+  var hapus = confirm("Are you sure?");
+  if (hapus) {
+    var input = "email=" + email;
+
+    var ajaxRequest = ajax(ajaxRequest);
+    ajaxRequest.onreadystatechange = function(){
+      if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+        var respon = ajaxRequest.responseText;
+        if (respon == 1) {
+          dashboardOrtu();
+        }
+        else {
+          alert(respon);
+        }
+      }
+    }
+
+    ajaxRequest.open("POST", "control/hapusOrtu.php", true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajaxRequest.send(input);
+  }
+}
+
+function logout() {
+  var ajaxRequest = ajax(ajaxRequest);
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+      var respon = ajaxRequest.responseText;
+      if (respon == 1) {
+        window.location = 'index.php';
+      }
+    }
+  }
+
+  ajaxRequest.open("GET", "control/logout.php", true);
+  ajaxRequest.send();
+}
