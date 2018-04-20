@@ -6,7 +6,7 @@
 
   $hash = md5($id."-".$rapot);
 
-  $targetFolder = "../rapot/";
+  $targetFolder = "../tbuser/rapot/";
   $targetFolder = $targetFolder.$id.$hash;
   $ok = 1;
   $fileType = $_FILES['file']['type'];
