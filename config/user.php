@@ -20,13 +20,16 @@
             $_SESSION['status'] = $status;
             if ($_SESSION['status'] == 0) {
               header("Location: ../admin.php");
+              exit();
             }
             elseif ($_SESSION['status'] == 1) {
               header("Location: ../guru.php");
+              exit();
             }
             else{
               session_destroy();
               header("Location: ../");
+              exit();
             }
           }
         }

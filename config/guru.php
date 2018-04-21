@@ -4,6 +4,7 @@
   class Guru extends Database{
 
     public function getSiswa(){
+      $this->getIdKelas();
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
       $sql = "SELECT nik, nama FROM siswa WHERE id_kelas='".$_SESSION['kelas']."'";
       $query = $mysqli->query($sql);
@@ -22,7 +23,6 @@
         $row = $query->fetch_array(MYSQLI_NUM);
         $_SESSION['nama'] = $row[1];
         $_SESSION['kelas'] = $row[2];
-        $this->getSiswa();
       }
       else {
         header("Location: index.php");

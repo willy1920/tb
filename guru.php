@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/guru.js"></script>
   </head>
-  <body>
+  <body onload="getSiswa()">
     <menu>
       <a href="control/logout.php">Logout</a>
     </menu>
