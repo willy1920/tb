@@ -9,7 +9,7 @@
       $query = $mysqli->query($sql);
       if ($query->num_rows > 0) {
         while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
-          echo "<div onclick='dashSiswa(".$row['nik'].")'>".$row['nama']."</div>";
+          echo "<div onclick='dashboardSiswa(".$row['nik'].")'>".$row['nama']."</div>";
         }
       }
     }
@@ -28,6 +28,9 @@
         header("Location: index.php");
         exit();
       }
+
+      $mysqli->close();
+      uset($mysqli, $sql, $query, $row);
     }
 
     public function getSiswaReportData($id){
