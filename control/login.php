@@ -1,9 +1,7 @@
 <?php
   include '../config/user.php';
 
-
-
-  $user = $_POST['user'];
+  $user = htmlspecialchars($_POST['user']);
   $pass = htmlspecialchars($_POST['pass']);
 
   $class = new User;

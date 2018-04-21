@@ -1,10 +1,11 @@
 <?php
   include 'db.php';
+  session_start();
 
   class User extends Database{
     public function login($user, $pass){
       $pass = sha1($pass);
-
+      $json = "{";
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
       $sql = "SELECT user, status FROM user WHERE user=? AND pass=?";
       $stmt = $mysqli->prepare($sql);
@@ -14,11 +15,19 @@
         $stmt->bind_result($name, $status);
         $stmt->store_result();
         if ($stmt->num_rows == 1) {
-          session_start();
           if ($stmt->fetch()) {
             $_SESSION['user'] = $name;
             $_SESSION['status'] = $status;
-            echo $status;
+            if ($_SESSION['status'] == 0) {
+              header("Location: ../admin.php");
+            }
+            elseif ($_SESSION['status'] == 1) {
+              header("Location: ../guru.php");
+            }
+            else{
+              session_destroy();
+              header("Location: ../");
+            }
           }
         }
         else {
@@ -31,9 +40,8 @@
     }
 
     public function logout(){
-      session_start();
       session_destroy();
-      echo "1";
+      header("Location: /");
     }
   }
 

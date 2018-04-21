@@ -313,7 +313,7 @@ function logout() {
     if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
       var respon = ajaxRequest.responseText;
       if (respon == 1) {
-        window.location = 'index.php';
+        window.location.href = 'http://tb.local/';
       }
     }
   }

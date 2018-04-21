@@ -19,7 +19,7 @@
       <div onclick="dashboardKelas()">Kelas</div>
       <div onclick="dashboardMurid()">Murid</div>
       <div onclick="dashboardOrtu()">Orang Tua</div>
-      <div onclick="logout()">Logout</div>
+      <div><a href="control/logout.php">Logout</a></div>
     </nav>
     <main id="respon">
 

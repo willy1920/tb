@@ -1,7 +1,7 @@
 <?php
   session_start();
-  if ($_SESSION['status'] != 1 || !isset($_SESSION['user'])) {
-    header("Location: index.php");
+  if (!isset($_SESSION['user']) || $_SESSION['status'] != 1) {
+    header("Location: /");
     exit();
   }
 ?>
@@ -14,14 +14,11 @@
     <script type="text/javascript" src="js/guru.js"></script>
   </head>
   <body>
+    <menu>
+      <a href="control/logout.php">Logout</a>
+    </menu>
     <main id="respon">
 
     </main>
-    <?php
-      include 'config/guru.php';
-
-      $guru = new Guru;
-      $guru->getIdKelas();
-    ?>
   </body>
 </html>
