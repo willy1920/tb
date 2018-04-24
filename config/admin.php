@@ -1,5 +1,7 @@
 <?php
   include 'db.php';
+  include "../PHPMailer-master/src/PHPMailer.php";
+  include "../PHPMailer-master/src/Exception.php";
 
   class Admin extends Database{
     public function dashboardKelas(){
@@ -579,6 +581,7 @@
     }
 
     function tambahUser($email, $status){
+
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
       $sql = "INSERT INTO user(user, pass, status)
               VALUES(?, ?, ?)";
@@ -589,10 +592,29 @@
         $stmt->bind_param("ssi", $email, $newPass, $status);
         $stmt->execute();
         if ($stmt->affected_rows == 1) {
-          $message = "User : ".$email."\n Pass : ".$pass;
-          $message = wordwrap($message, 70, "\r\n");
-          mail($email, "Account Tunas Bangsa", $message);
-          echo "1";
+          try{
+            $message = 'User : '.$email.'\nPass : '.$pass.'\nPlease do not reply to this email\nTolong jangan balas email ini';
+
+            $mail = new PHPMailer(true);
+            $mail->SMTpDebug = 2;
+            $mail->isSMTP();
+            $mail->Host = "smtp.stromzivota.web.id";
+            $mail->Username = "system@stromzivota.web.id";
+            $mail->Password = "J21Afdn4!";
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = '465';
+
+            $mail->setFrom('system@stromzivota.web.id', 'Mailer');
+            $mail->isHTML(true);
+            $mail->Subject = 'Account Tunas Bangsa';
+            $mail->Body = $message;
+            $mail->AltBody = $message;
+
+            $mail->send();
+            echo "1";
+          } catch (Exception $e){
+            echo "Message failed";
+          }
         }
         else{
           echo "Execute failed";
