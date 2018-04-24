@@ -13,9 +13,11 @@
     <link rel="stylesheet" href="style/general.css">
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="js/adminGuru.js"></script>
   </head>
   <body>
     <nav>
+      <div onclick="dashboardGuru()">Guru</div>
       <div onclick="dashboardKelas()">Kelas</div>
       <div onclick="dashboardMurid()">Murid</div>
       <div onclick="dashboardOrtu()">Orang Tua</div>

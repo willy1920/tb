@@ -404,6 +404,219 @@
         "Delete failed";
       }
     }
+
+    public function dashboardGuru(){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "SELECT 
+              guru.email_guru,
+              guru.nama_guru,
+              guru.id_kelas,
+              kelas.nama_kelas
+              FROM guru
+              INNER JOIN kelas
+              ON guru.id_kelas = kelas.id_kelas";
+      if ($query = $mysqli->query($sql)) {
+        echo "<h1>Managemen Guru</h1>";
+        echo "<img class='icon' src='../icon/add.png' onclick='tambahGuruDashboard()'>";
+        echo "<table>";
+        while ($row = $query->fetch_array(MYSQLI_NUM)) {
+          ?>
+          <tr>
+          <td><?php echo $row[1]; ?></td>
+          <td><?php echo $row[3]; ?></td>
+          <td><img class='icon' src='../icon/edit.png' onclick='ubahGuruDashboard("<?php echo $row[0]; ?>","<?php echo $row[1]; ?>","<?php echo $row[2]; ?>")'></td>
+          <td><img class='icon' src='../icon/delete.png' onclick='hapusGuru("<?php echo $row[0]; ?>")'></td>
+          </tr>
+          <?php
+        }
+        echo "</table>";
+      }
+    }
+
+    public function tambahGuruDashboard(){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "SELECT * FROM kelas";
+      $query = $mysqli->query($sql);
+      ?>
+      <table>
+        <tr>
+          <td>Email</td>
+          <td>:</td>
+          <td><input type="text" id="email"></td>
+        </tr>
+        <tr>
+          <td>Nama</td>
+          <td>:</td>
+          <td><input type="text" id="nama"></td>
+        </tr>
+        <tr>
+          <td>Kelas</td>
+          <td>:</td>
+          <td>
+            <select id="kelas">
+              <?php
+              while($row = $query->fetch_array(MYSQLI_NUM)){
+                echo "<option value='". $row[0]."'>".$row[1]."</option>";
+              }
+              ?>              
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><button onclick="tambahGuru()">Submit</button></td>
+        </tr>
+      </table>
+      <?php
+    }
+
+    public function tambahGuru($email, $nama, $kelas){
+      $status = 1;
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "INSERT INTO guru (email_guru, nama_guru, id_kelas, status)
+              VALUES(?, ?, ?, ?)";
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("ssii", $email, $nama, $kelas, $status);
+        $stmt->execute();
+        if ($stmt->affected_rows == 1) {
+          $stmt->close();
+          $this->tambahUser($email, 1);
+        }
+        else{
+          echo "Execute failed";
+        }
+      }
+      else{
+        echo "Prepare failed";
+      }
+      $mysqli->close();
+      unset($status, $sql, $mysqli, $stmt, $email, $nama, $kelas);
+    }
+
+    public function ubahGuruDashboard($email, $nama, $kelas){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "SELECT * FROM kelas";
+      $query = $mysqli->query($sql);
+      ?>
+      <table>
+        <tr>
+          <td>Email</td>
+          <td>:</td>
+          <td><input type="email" id="email" value="<?php echo $email; ?>" disabled></td>
+        </tr>
+        <tr>
+          <td>Nama</td>
+          <td>:</td>
+          <td><input type="text" id="nama" value="<?php echo $nama; ?>"></td>
+        </tr>
+        <tr>
+          <td>Kelas</td>
+          <td>:</td>
+          <td>
+            <select id="kelas">
+              <?php
+              while($row = $query->fetch_array(MYSQLI_NUM)){
+                if ($row[0] == $kelas) {
+                  echo '<option value="'.$row[0].'" selected>'.$row[1].'</selected>';
+                }
+                else{
+                  echo '<option value="'.$row[0].'">'.$row[1].'</selected>';
+                }
+              }
+              ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><button onclick="ubahGuru()">Submit</button></td>
+        </tr>
+      </table>
+      <?php
+    }
+
+    public function ubahGuru($email, $nama, $kelas){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "UPDATE guru SET 
+              nama_guru=?,
+              id_kelas=?
+              WHERE email_guru=?";
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("sis", $nama, $kelas, $email);
+        $stmt->execute();
+        if ($stmt->affected_rows == 1) {
+          echo "1";
+        }
+        else{
+          echo "Execute failed";
+        }
+      }
+      else{
+        echo "Prepare failed";
+      }
+    }
+
+    public function hapusGuru($email){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "DELETE FROM guru WHERE email_guru='$email'";
+      if ($query = $mysqli->query($sql)) {
+        $this->deleteUser($email);
+      }
+      else{
+        "Delete failed";
+      }
+      $mysqli->close();
+      unset($mysqli, $sql, $query);
+    }
+
+    function randomPassword() {
+      $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+      $pass = array(); //remember to declare $pass as an array
+      $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+      for ($i = 0; $i < 8; $i++) {
+          $n = rand(0, $alphaLength);
+          $pass[] = $alphabet[$n];
+      }
+      return implode($pass); //turn the array into a string
+    }
+
+    function tambahUser($email, $status){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "INSERT INTO user(user, pass, status)
+              VALUES(?, ?, ?)";
+      $pass = $this->randomPassword();
+      $newPass = sha1($pass);
+
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("ssi", $email, $newPass, $status);
+        $stmt->execute();
+        if ($stmt->affected_rows == 1) {
+          $message = "User : ".$email."\n Pass : ".$pass;
+          $message = wordwrap($message, 70, "\r\n");
+          mail($email, "Account Tunas Bangsa", $message);
+          echo "1";
+        }
+        else{
+          echo "Execute failed";
+        }
+      }
+      else{
+        echo "Prepare failed";
+      }
+      
+    }
+
+    function deleteUser($email){
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "DELETE FROM user WHERE user='$email'";
+      $query = $mysqli->query($sql);
+      if ($query) {
+        echo "1";
+      }
+      else{
+        echo "Delete user failed";
+      }
+      $mysqli->close();
+      unset($sql, $query, $mysqli);
+    }
   }
 
 ?>
