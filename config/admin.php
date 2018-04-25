@@ -246,34 +246,32 @@
           <td>Kelas</td>
           <td>:</td>
           <td>
-          <?php
-            $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
-            $sql = "SELECT * FROM kelas";
-            $query = $mysqli->query($sql);
-            if($query){
-              while ($row = $query->fetch_array(MYSQLI_NUM)) {
-                if ($row[0] == $kelas) {
-                  ?>
-                  <select id="kelas">
-                    <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>
-                  </select>
-                  <?php
+            <select id="kelas">
+            <?php
+              $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+              $sql = "SELECT * FROM kelas";
+              $query = $mysqli->query($sql);
+              if($query){
+                while ($row = $query->fetch_array(MYSQLI_NUM)) {
+                  if ($row[1] == $kelas) {
+                    ?>
+                      <option value="<?php echo $row[0]; ?>" selected><?php echo $row[1]; ?></option>
+                    <?php
+                  }
+                  else {
+                    ?>
+                      <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                    <?php
+                  }
                 }
-                else {
-                  ?>
-                  <select id="kelas">
-                    <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                  </select>
-                  <?php
-                }
+                $mysqli->close();
+                unset($mysqli, $sql, $query, $row);
               }
-              $mysqli->close();
-              unset($mysqli, $sql, $query, $row);
-            }
-            else {
-              echo "gagal";
-            }
-          ?>
+              else {
+                echo "gagal";
+              }
+            ?>
+            </select>
         </tr>
         <tr>
           <td>Email orang tua</td>
