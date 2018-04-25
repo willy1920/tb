@@ -2,6 +2,8 @@
   include 'db.php';
   include "../PHPMailer-master/src/PHPMailer.php";
   include "../PHPMailer-master/src/Exception.php";
+  include "../PHPMailer-master/src/SMTP.php";
+
 
   class Admin extends Database{
     public function dashboardKelas(){
@@ -581,10 +583,10 @@
     }
 
     function tambahUser($email, $status){
-
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
       $sql = "INSERT INTO user(user, pass, status)
               VALUES(?, ?, ?)";
+
       $pass = $this->randomPassword();
       $newPass = sha1($pass);
 
@@ -593,25 +595,32 @@
         $stmt->execute();
         if ($stmt->affected_rows == 1) {
           try{
-            $message = 'User : '.$email.'\nPass : '.$pass.'\nPlease do not reply to this email\nTolong jangan balas email ini';
+            $messageHTML = 'User : '.$email.'<br>Pass : '.$pass.'<br>Please do not reply to this email<br>Tolong jangan balas email ini';
+            $message = "User : ".$email."\nPass : ".$pass."\nPlease do not reply to this email\nTolong jangan balas email ini";
 
-            $mail = new PHPMailer(true);
-            $mail->SMTpDebug = 2;
-            $mail->isSMTP();
-            $mail->Host = "smtp.stromzivota.web.id";
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+            $mail->IsSMTP();
+            $mail->SMTPDebug = 2;
+            $mail->SMTPAuth = true;
+            $mail->Host = "stromzivota.web.id";
             $mail->Username = "system@stromzivota.web.id";
             $mail->Password = "J21Afdn4!";
-            $mail->SMTPSecure = 'tls';
+            $mail->SMTPSecure = 'ssl';
             $mail->Port = '465';
 
-            $mail->setFrom('system@stromzivota.web.id', 'Mailer');
+            $mail->setFrom('system@stromzivota.web.id', 'System Tunas Bangsa');
+            $mail->addAddress($email, "");
             $mail->isHTML(true);
             $mail->Subject = 'Account Tunas Bangsa';
-            $mail->Body = $message;
+            $mail->Body = $messageHTML;
             $mail->AltBody = $message;
 
-            $mail->send();
-            echo "1";
+            if ($mail->send()) {
+              echo "1";
+            }
+            else{
+              echo "Email not send : ".$mail->ErrorInfo;
+            }
           } catch (Exception $e){
             echo "Message failed";
           }

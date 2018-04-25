@@ -40,7 +40,8 @@ function dashboardGuru() {
           dashboardGuru();
         }
         else {
-          alert(respon);
+          
+          document.getElementById('respon').innerHTML = respon;
         }
       }
     }
