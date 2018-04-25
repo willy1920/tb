@@ -598,13 +598,13 @@
 
             $mail = new PHPMailer\PHPMailer\PHPMailer();
             $mail->IsSMTP();
-            $mail->SMTPDebug = 2;
+            $mail->SMTPDebug = 0;
             $mail->SMTPAuth = true;
-            $mail->Host = "stromzivota.web.id";
-            $mail->Username = "system@stromzivota.web.id";
-            $mail->Password = "J21Afdn4!";
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = '465';
+            $mail->Host = $this->hostEmail;
+            $mail->Username = $this->emailUser;
+            $mail->Password = $this->emailPass;
+            $mail->SMTPSecure = $this->SMTPSecure;
+            $mail->Port = $this->Port;
 
             $mail->setFrom('system@stromzivota.web.id', 'System Tunas Bangsa');
             $mail->addAddress($email, "");
