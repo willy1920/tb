@@ -14,22 +14,21 @@
                     $stmt->bind_result($data);
                     $stmt->store_result();
                     if ($stmt->num_rows == 1) {
-                        session_start();
-                        echo 1;
                         if ($stmt->fetch()) {
                           $_SESSION['email'] = $data;
                         }
+                        header("Location: /parent.php");
                     }
                     else {
-                        echo "Username or password is incorrect";
+                        header("Location: /index.php?error=1");
                     }
                 }
                 else{
-                    echo "Execute failed";
+                    header("Location: /index.php?error=1");
                 }
             }
             else{
-                echo "Prepare failed";
+                header("Location: /index.php?error=1");
             }
         }
     }

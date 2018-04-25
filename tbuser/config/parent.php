@@ -3,8 +3,6 @@
 
     class Parentt extends Database{
         public function dashboard(){
-            session_start();
-
             $email = $_SESSION['email'];
             $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
             $sql = "SELECT 
