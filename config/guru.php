@@ -17,7 +17,7 @@
 
     public function getIdKelas(){
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
-      $sql = "SELECT * FROM guru WHERE id_guru='".$_SESSION['user']."'";
+      $sql = "SELECT * FROM guru WHERE email_guru='".$_SESSION['user']."'";
       $query = $mysqli->query($sql);
       if ($query->num_rows == 1) {
         $row = $query->fetch_array(MYSQLI_NUM);
@@ -25,12 +25,11 @@
         $_SESSION['kelas'] = $row[2];
       }
       else {
-        header("Location: index.php");
-        exit();
+        echo "Homebase teacher not found";
       }
 
       $mysqli->close();
-      uset($mysqli, $sql, $query, $row);
+      unset($mysqli, $sql, $query, $row);
     }
 
     public function getSiswaReportData($id){
@@ -87,7 +86,7 @@
           <td>
             <?php
               if ($mid1 == null) {
-                echo "<a href='formUpload.php?id=".$id."&rapot=mid1'>upload</a>";
+                echo "<a href='formUpload.php?id=".$id."&rapot=mid1' target='_blank'>upload</a>";
               }
               else {
                 echo "<a href='rapot/".$mid1."' target='_blank'>Hasil</a>";
@@ -97,7 +96,7 @@
           <td>
             <?php
               if ($term1 == null) {
-                echo "<a href='formUpload.php?id=".$id."&rapot=term1'>upload</a>";
+                echo "<a href='formUpload.php?id=".$id."&rapot=term1' target='_blank'>upload</a>";
               }
               else {
                 echo "<a href='rapot/".$term1."' target='_blank'>Hasil</a>";
@@ -107,7 +106,7 @@
           <td>
             <?php
               if ($mid2 == null) {
-                echo "<a href='formUpload.php?id=".$id."&rapot=mid2'>upload</a>";
+                echo "<a href='formUpload.php?id=".$id."&rapot=mid2' target='_blank'>upload</a>";
               }
               else {
                 echo "<a href='rapot/".$mid2."' target='_blank'>Hasil</a>";
@@ -117,7 +116,7 @@
           <td>
             <?php
               if ($term2 == null) {
-                echo "<a href='formUpload.php?id=".$id."&rapot=term2'>upload</a>";
+                echo "<a href='formUpload.php?id=".$id."&rapot=term2' target='_blank'>upload</a>";
               }
               else {
                 echo "<a href='rapot/".$term2."' target='_blank'>Hasil</a>";
@@ -147,6 +146,53 @@
       }
       else {
         echo "prepare gagal";
+      }
+    }
+
+    public function changePasswordDashboard(){
+      ?>
+      <table>
+        <tr>
+          <td>Email</td>
+          <td>:</td>
+          <td><input type="email" value="<?php echo $_SESSION['user']; ?>" id="email"></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td>:</td>
+          <td><input type="password" onkeyup="return passwordChecker(1);" id='password1'></td>
+          <td><span id="strength1">Type Password</span></td>
+        </tr>
+        <tr>
+          <td>Password (Again)</td>
+          <td>:</td>
+          <td><input type="password" onkeyup="passwordValue()" id="password2"></td>
+          <td><span id="check"></span></td>
+        </tr>
+        <tr>
+          <td colspan="4"><button onclick='changePassword()'>Submit</button></td>
+        </tr>
+      </table>
+      <?php
+    }
+
+    public function changePassword($email, $pass){
+      $pass = sha1($pass);
+
+      $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+      $sql = "UPDATE user SET user=?, pass=? WHERE user=?";
+      if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("sss", $email, $pass, $_SESSION['user']);;
+        $stmt->execute();
+        if ($stmt->affected_rows == 1) {
+          echo "1";
+        }
+        else{
+          echo "Execute failed";
+        }
+      }
+      else{
+        echo "Prepare failed";
       }
     }
   }

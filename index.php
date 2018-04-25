@@ -3,11 +3,17 @@
 <html>
 <head>
 	<title>Rapot Tunas Bangsa Kubu Raya</title>
-	<script>
+	<script type='text/javascript'>
 		<?php
 			$error = $_GET['error'];
 			if ($error == 1) {
 				echo "alert('Username or password incorrect')";
+			}
+			elseif($error == ""){
+				echo "";
+			}
+			else{
+				echo "alert('Ayo mau ngapain')";
 			}
 		?>
 	</script>

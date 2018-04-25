@@ -13,8 +13,10 @@
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/guru.js"></script>
   </head>
-  <body onload="getSiswa()">
+  <body>
     <menu>
+      <div onclick="getSiswa()">Dashboard</div>
+      <div onclick="changePasswordDashboard()">Change Password</div>
       <a href="control/logout.php">Logout</a>
     </menu>
     <main id="respon">
