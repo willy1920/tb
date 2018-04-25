@@ -3,6 +3,14 @@
 <html>
 <head>
 	<title>Rapot Tunas Bangsa Kubu Raya</title>
+	<script>
+		<?php
+			$error = $_GET['error'];
+			if ($error == 1) {
+				echo "alert('Username or password incorrect')";
+			}
+		?>
+	</script>
 </head>
 <body>
 	<form action="control/login.php" method="post">
