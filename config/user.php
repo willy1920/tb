@@ -34,7 +34,7 @@
           }
         }
         else {
-          echo "Username or password is incorrect";
+          header("Location: /index.php?error=1");
         }
       }
       else {
