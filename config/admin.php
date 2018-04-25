@@ -378,14 +378,43 @@
 
     public function tambahOrtu($email){
       $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
-      $pass = "0";
-      $activated = 0;
-      $sql = "INSERT INTO ortu (email, pass, activated) VALUES(?, ?, ?)";
+      $pass = $this->randomPassword();
+      $newPass = sha1($pass);
+      $sql = "INSERT INTO ortu (email, pass) VALUES(?, ?)";
       if ($stmt = $mysqli->prepare($sql)) {
-        $stmt->bind_param("ssi", $email, $pass, $activated);
+        $stmt->bind_param("ss", $email, $newPass);
         $stmt->execute();
         if ($stmt->affected_rows == 1) {
-          echo "1";
+          try{
+            $messageHTML = 'User : '.$email.'<br>Pass : '.$pass.'<br>Please do not reply to this email<br>Tolong jangan balas email ini';
+            $message = "User : ".$email."\nPass : ".$pass."\nPlease do not reply to this email\nTolong jangan balas email ini";
+
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+            $mail->IsSMTP();
+            $mail->SMTPDebug = 0;
+            $mail->SMTPAuth = true;
+            $mail->Host = $this->hostEmail;
+            $mail->Username = $this->emailUser;
+            $mail->Password = $this->emailPass;
+            $mail->SMTPSecure = $this->SMTPSecure;
+            $mail->Port = $this->Port;
+
+            $mail->setFrom('system@stromzivota.web.id', 'System Tunas Bangsa');
+            $mail->addAddress($email, "");
+            $mail->isHTML(true);
+            $mail->Subject = 'Account Tunas Bangsa';
+            $mail->Body = $messageHTML;
+            $mail->AltBody = $message;
+
+            if ($mail->send()) {
+              echo "1";
+            }
+            else{
+              echo "Email not send : ".$mail->ErrorInfo;
+            }
+          } catch (Exception $e){
+            echo "Message failed";
+          }
         }
         else{
           echo "Execute failed";
