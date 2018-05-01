@@ -12,8 +12,8 @@
     <title>Admin Rapot Tunas Bangsa</title>
     <link rel="stylesheet" href="style/general.css">
     <script type="text/javascript" src="js/ajax.js"></script>
+    <script src="js/xlsx.full.min.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
-    <script type="text/javascript" src="js/adminGuru.js"></script>
   </head>
   <body>
     <nav>

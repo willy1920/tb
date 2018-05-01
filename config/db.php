@@ -19,8 +19,8 @@
 			$this->pass = "";
 			$this->name = "tb";
 
-			$this->hostEmail = 'stromzivota.web.id';
-			$this->emailUser = 'system@stromzivota.web.id';
+			$this->hostEmail = 'mail.tunasbangsa.sch.id';
+			$this->emailUser = 'system@tunasbangsa.sch.id';
 			$this->emailPass = 'J21Afdn4!';
 			$this->SMTPSecure = 'ssl';
 			$this->Port = '465';
