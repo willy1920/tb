@@ -17,6 +17,7 @@
 </head>
 <body>
     <button onclick="dashboard()">Dashboard</button>
+    <button onclick="changePasswordDashboard()">Change Password</button>
     <main id="respon">
     
     </main>

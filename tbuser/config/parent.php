@@ -88,6 +88,53 @@
                 echo "Query failed";
             }
         }
+
+        public function changePasswordDashboard(){
+            ?>
+            <table>
+                <tr>
+                <td>Email</td>
+                <td>:</td>
+                <td><input type="email" value="<?php echo $_SESSION['email']; ?>" id="email" disabled></td>
+                </tr>
+                <tr>
+                <td>Password</td>
+                <td>:</td>
+                <td><input type="password" onkeyup="return passwordChecker(1);" id='password1'></td>
+                <td><span id="strength1">Type Password</span></td>
+                </tr>
+                <tr>
+                <td>Password (Again)</td>
+                <td>:</td>
+                <td><input type="password" onkeyup="passwordValue()" id="password2"></td>
+                <td><span id="check"></span></td>
+                </tr>
+                <tr>
+                <td colspan="4"><button onclick='changePassword()'>Submit</button></td>
+                </tr>
+            </table>
+            <?php
+        }
+        
+        public function changePassword($pass){
+            $pass = sha1($pass);
+
+            $mysqli = mysqli_connect($this->host, $this->user, $this->pass, $this->name);
+            $sql = "UPDATE ortu SET pass=? WHERE email=?";
+            if ($stmt = $mysqli->prepare($sql)) {
+                $stmt->bind_param("ss", $pass, $_SESSION['email']);;
+                $stmt->execute();
+                if ($stmt->affected_rows == 1) {
+                echo "1";
+                }
+                else{
+                echo "Execute failed";
+                }
+            }
+            else{
+                echo "Prepare failed";
+            }
+        }
     }
     
 ?>
