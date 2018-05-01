@@ -81,7 +81,6 @@ function passwordValue(){
 }
 
 function changePassword(){
-  console.log("lalalal");
   if (passwordValue()) {
     var email = document.getElementById('email').value;
     var pass = document.getElementById('password1').value;
