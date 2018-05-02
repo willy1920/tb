@@ -12,7 +12,7 @@ function dashboard() {
         }
     }
 
-    ajaxRequest.open("GET", "control/dashboard.php", true);
+    ajaxRequest.open("GET", "control/externalDashboard.php", true);
     ajaxRequest.send();
 }
 
@@ -28,7 +28,7 @@ function dashboardReport(nik) {
         }
     }
 
-    ajaxRequest.open("POST", "control/dashboardReport.php", true);
+    ajaxRequest.open("POST", "control/externalDashboardReport.php", true);
     ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     ajaxRequest.send(input);
 }
@@ -43,7 +43,7 @@ function changePasswordDashboard() {
         }
     }
 
-    ajaxRequest.open("GET", "control/changePasswordDashboard.php", true);
+    ajaxRequest.open("GET", "control/externalChangePasswordDashboard.php", true);
     ajaxRequest.send();
 }
 
@@ -101,7 +101,7 @@ function changePassword() {
             }
         }
 
-        ajaxRequest.open("POST", "control/changePassword.php", true);
+        ajaxRequest.open("POST", "control/externalChangePassword.php", true);
         ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajaxRequest.send(input);
     }

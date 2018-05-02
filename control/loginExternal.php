@@ -7,5 +7,5 @@
   $pass = htmlspecialchars($_POST['pass']);
 
   $class = new User;
-  $class->login($email, $pass);
+  $class->loginExternal($email, $pass);
 ?>
