@@ -18,6 +18,7 @@
 <body>
     <button onclick="dashboard()">Dashboard</button>
     <button onclick="changePasswordDashboard()">Change Password</button>
+    <a href="control/logout.php">Logout</a>
     <main id="respon">
     
     </main>
