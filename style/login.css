@@ -1,0 +1,15 @@
+.loginForm{display: flex; justify-content: center; margin: 10px; font-size: 25px;}
+.loginTitle{text-align: center;}
+.loginForm main{width: 50%;}
+.loginForm main button{font-size: 25px; padding: 15px;}
+.loginForm main input{
+    padding: 15px; 
+    font-size: 25px;
+    background-color: #ffffff;
+    width: 100%;
+    margin: 10px 0;
+}
+.login{background-color: #ffffff;}
+.loginSide{background-color: #00752a; }
+.loginSubmit{background-color: #de001d}
+.loginHeader{display: flex; justify-content: center; margin-top: 3%;}

@@ -5,7 +5,37 @@
 	<meta charset="utf-8">
 	<title>Rapot Tunas Bangsa Kubu Raya</title>
 	<link rel="stylesheet" href="style/general.css">
+	<link rel="stylesheet" href="style/login.css">
 	<script src="js/ajax.js"></script>
+	
+</head>
+
+<body class="login">
+	<header class="loginHeader">
+		<h1>Tunas Bangsa Kubu Raya</h1>
+	</header>
+	<section id="internal" class="loginForm">
+		<main>
+			<h1>Admin Login</h1>
+			<input type="text"id="user" placeholder="username" autofocus>
+			<br>
+			<input type="password"id="internalPass" placeholder="password">
+			<br>
+			<button class="loginSide" onclick="changeToExternal()">Parent Form</button>
+			<button class="loginSubmit" onclick="loginInternal()">Submit</button>
+		</main>
+	</section>
+	<section id="external" class="loginForm">
+		<main>
+			<h1>Parent Login</h1>
+			<input type="email" id="email" placeholder="email">
+			<br>
+			<input type="password" id="externalPass" placeholder="password">
+			<br>
+			<button class="loginSide" onclick="changeToInternal()">Admin Form</button>
+			<button class="loginSubmit" onclick="loginExternal()">Submit</button>
+		</main>
+	</section>
 	<script type='text/javascript'>
 		function loginInternal() {
 			var user = document.getElementById('user').value;
@@ -55,81 +85,28 @@
 			ajaxRequest.send(input);
 		}
 		function changeToInternal() {
-			document.getElementById('internal').style.display = 'block';
+			document.getElementById('internal').style.display = 'flex';
 			document.getElementById('external').style.display = 'none';
 		}
-
 		function changeToExternal() {
 			document.getElementById('internal').style.display = 'none';
-			document.getElementById('external').style.display = 'block';
+			document.getElementById('external').style.display = 'flex';
+		}
+		
+		document.getElementById('internalPass').addEventListener('keydown', internalCheckEnter, false);
+		document.getElementById('externalPass').addEventListener('keydown', externalCehckEnter, false);
+		function internalCheckEnter(event) {
+			if (event.keyCode == 13) {
+				loginInternal();
+			}
 		}
 
+		function externalCehckEnter(event) {
+			if (event.keyCode == 13) {
+				loginExternal();
+			}
+		}
 	</script>
-</head>
-
-<body>
-	<section id="internal">
-		<table>
-			<tr>
-				<td colspan="3">
-					<h1>Admin and Guru</h1>
-				</td>
-			</tr>
-			<tr>
-				<td>Username</td>
-				<td>:</td>
-				<td>
-					<input type="text" name="user" id="user">
-				</td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td>:</td>
-				<td>
-					<input type="password" name="pass" id="internalPass">
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div onclick="changeToExternal()">Parent Form</div>
-				</td>
-				<td>
-					<input type="submit" value="Submit" onclick="loginInternal()">
-				</td>
-			</tr>
-		</table>
-	</section>
-	<section id="external">
-		<table>
-			<tr>
-				<td colspan="3">
-					<h1>Parent</h1>
-				</td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td>:</td>
-				<td>
-					<input type="email" name="email" id="email">
-				</td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td>:</td>
-				<td>
-					<input type="password" name="pass" id="externalPass">
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div onclick="changeToInternal()">Parent Form</div>
-				</td>
-				<td>
-					<input type="submit" value="Submit" onclick="loginExternal()">
-				</td>
-			</tr>
-		</table>
-	</section>
 </body>
 
 </html>
